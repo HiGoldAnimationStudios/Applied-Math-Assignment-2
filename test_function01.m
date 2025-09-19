@@ -1,0 +1,24 @@
+%the function name and input/output variable names
+%are just what I chose, you can use whatever names you'd like
+function [f_val,J] = test_function01(X)
+    f1=X(1)^2+X(2)^2-6-X(3)^5;
+    f2=X(1).*X(3) + X(2) - 12;
+    f3=sin(X(1)+X(2)+X(3));
+    f_val=[f1;f2;f3];
+
+    df1dx1=2*X(1);
+    df1dx2=2*X(2);
+    df1dx3=5*X(3)^4;
+
+    df2dx1=X(3);
+    df2dx2=1;
+    df2dx3=X(1);
+
+    df3dx1=cos(X(1)+X(2)+X(3));
+    df3dx2=cos(X(1)+X(2)+X(3));
+    df3dx3=cos(X(1)+X(2)+X(3));
+
+    J=[df1dx1 df1dx2 df1dx3; 
+       df2dx1 df2dx2 df2dx3
+       df3dx1 df3dx2 df3dx3];
+end
