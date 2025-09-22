@@ -7,14 +7,14 @@
 %J: approximation of Jacobian of fun at x
 function J = approximate_jacobian(fun,x)
 
-    J = zeros(length(x),length(x));
+    J = zeros(length(fun(x)),length(x));
 
-    ei=zeros(length(x),1);
     
-    disp(x(2))
+    h=1e-6;
+
     for i=1:length(x)
-        disp(x(i))
-        dfdx=approximate_derivative(fun,x(i));
+    
+        dfdx=approximate_derivative(fun,x,i);
         J(:,i)=dfdx;
         
     end
