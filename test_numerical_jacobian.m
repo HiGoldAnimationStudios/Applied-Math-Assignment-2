@@ -18,6 +18,7 @@ C = randn(output_dim,1);
 %with input dimension input_dim and output dimension output_dim
 test_fun = @(X) jacobian_test_function(X,A,B,C);
 X_guess = randn(input_dim,1);
+
 %evaluate numerical Jacobian of test_fun
 %use whatever your function name was here!
 J_numerical = approximate_jacobian(test_fun,X_guess);
