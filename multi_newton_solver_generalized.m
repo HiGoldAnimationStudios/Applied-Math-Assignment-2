@@ -37,22 +37,54 @@ function [x, exit_flag] = multi_newton_solver_generalized(fun,x_guess,solver_par
     if isfield(solver_params,'numerical_diff')
         numerical_diff = solver_params.numerical_diff;
     end
+
+    max_iter = 200;
+    if isfield(solver_params,'max_iter')
+        max_iter = solver_params.max_iter;
+    end
+
     %your code here
     exit_flag=0;
+
     if numerical_diff==0
         %with J given
-        [fval,J]=fun(x_guess);
+        [fval, J] = fun(x_guess);
         
     end
+
     if numerical_diff==1
         %no J
         fval=fun(x_guess);
-        J=approximate_jacobian(fval,x_guess);
+        J=approximate_jacobian(fun, x_guess);
     end
 
-    x=newton_Jacobian(fval,J,x_guess);
-    if fval(x)<1e-7
+    delta_x = -J\fval;
+    count = 0;
+
+    while count<max_iter && norm(delta_x)>dxtol && norm(fval)>ftol && norm(delta_x)<dxmax
+        count = count+1;
+
+        if numerical_diff==0
+            %with J given
+            [fval, J] = fun(x_guess);
+            
+        end
+    
+        if numerical_diff==1
+            %no J
+            fval=fun(x_guess);
+            J=approximate_jacobian(fun, x_guess);
+        end
+
+        delta_x = -J\fval;
+        x_guess = x_guess + delta_x;
+    end
+    % x=newton_Jacobian(fun,J,x_guess);
+
+    if norm(fval)<1e-7
         exit_flag=1;
     end
+    
+    x = x_guess;
     
 end

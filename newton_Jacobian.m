@@ -2,15 +2,16 @@ function root = newton_Jacobian(fun, J, X_0)
     max_iter = 1000;
 
     i = 0;
-    guesses = [];
+    %guesses = [];
     x_n = X_0;
-    
+    delta_x=1;
     while (i < max_iter)
 
         x_n1 = x_n - J\fun(x_n);
         %guesses(end + 1) = x_n;
-        x_n=x_n1;
         
+        x_n=x_n1;
+        i=i+1;
     end
     %guesses(end + 1) = root;
 
