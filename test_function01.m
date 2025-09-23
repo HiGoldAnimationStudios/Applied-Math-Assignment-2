@@ -18,7 +18,8 @@ function [f_val,J] = test_function01(X)
     df3dx2=cos(X(1)+X(2)+X(3));
     df3dx3=cos(X(1)+X(2)+X(3));
 
-    J=[df1dx1 df1dx2 df1dx3; 
-       df2dx1 df2dx2 df2dx3
-       df3dx1 df3dx2 df3dx3];
+
+    J=[[df1dx1, df1dx2, df1dx3]; 
+       [df2dx1, df2dx2, df2dx3];
+       [df3dx1, df3dx2, df3dx3]];
 end

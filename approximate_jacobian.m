@@ -18,8 +18,6 @@ function J = approximate_jacobian(fun,x)
         J(:,i)=dfdx;
         
     end
-    
-
     %set the step size to be tiny
     %delta_x = 1e-6;
     %compute the function at different points near x

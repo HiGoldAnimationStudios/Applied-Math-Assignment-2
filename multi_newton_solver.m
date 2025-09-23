@@ -39,3 +39,32 @@ numerical_diff = solver_params.numerical_diff;
 end
 %your code here
 end
+
+
+function X_root=orion_multi_newton(fun,X,solver_params)
+    dxmin=solver_params.dxminl
+    ftol=solver_params.ftol
+    dxmax=solver_params.dxmax
+    max_iter=solver_params.max_iter
+    approx=solver_params.approx
+
+    if approx
+        fval=fun(X);
+        J=approximate_Jacobian01(fun,X);
+    else
+        [fval,J]=fun(X);
+    end
+    delta_x=-J/fval;
+    count=0;
+    while count<max_iter && norm(delta_x)>dxmin && norm(fval)>ftol && norm(delta_x)<dxmax
+        count=count+1;
+        if approx
+            fval=fun(X);
+            J=approximate_Jacobian01(fun,X);
+        else
+            [fval,J]=fun(X);
+        end
+        delta_x=-J/fval;
+
+    end
+end
