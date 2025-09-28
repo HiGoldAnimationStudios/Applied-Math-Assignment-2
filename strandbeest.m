@@ -55,7 +55,46 @@ function strandbeest()
 
     vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
 
-    leg_drawing=initialize_leg_drawing(leg_params);
+    %leg_drawing=initialize_leg_drawing(leg_params);
 
-    update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
+    %update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
+    
+    %animating from 0-6pi degrees
+    for i=0:0.1:6*pi
+        %vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, i);
+        %leg_drawing=initialize_leg_drawing(leg_params);
+        %update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
+    end
+
+    mypath1 = 'C:\Users\jvidaurrazaga\OneDrive - Olin College of Engineering\Documents\GitHub\Applied-Math-Assignment-2\';
+    fname='leg_animation.avi';
+    input_fname = [mypath1,fname];
+    writerObj = VideoWriter(input_fname);
+    open(writerObj);
+    fig1 = figure(1);
+    %set up the plotting axis
+    %hold on; 
+    axis equal; axis square
+    axis([-120,20,-100,40])
+    %initialize the plot of the leg
+    
+
+    for i=0:0.1:6*pi
+        vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, i);
+        leg_drawing=initialize_leg_drawing(leg_params);
+        update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
+
+        drawnow;
+        %capture a frame (what is currently plotted)
+        current_frame = getframe(fig1);
+        %write the frame to the video
+        writeVideo(writerObj,current_frame);
+    end
+    close(writerObj);
+
+
+    dVdtheta=compute_velocities(vertex_coords_root,leg_params,theta);
+    x7_LA=dVdtheta(13);
+    y7_LA=dVdtheta(14);
+ 
 end

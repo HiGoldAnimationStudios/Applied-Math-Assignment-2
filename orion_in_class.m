@@ -1,4 +1,4 @@
-function orion_in_class()
+unction orion_in_class()
     X0=randn(3,1)    
     J_numerical=approximate_derivative01()
     [~,J_analytical]=test_function01(X0)

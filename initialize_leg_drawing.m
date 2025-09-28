@@ -21,4 +21,5 @@ function leg_drawing = initialize_leg_drawing(leg_params)
         leg_drawing.vertices{vertex_index} = line([0],[0],'marker',...
         'o','markerfacecolor','r','markeredgecolor','r','markersize',8);
     end
+    
 end
