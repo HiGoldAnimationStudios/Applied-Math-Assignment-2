@@ -78,12 +78,32 @@ function strandbeest()
     axis([-120,20,-100,40])
     %initialize the plot of the leg
     
+    x7_LA=[];
+    y7_LA=[];
+    x7_FD=[];
+    y7_FD=[];
+    theta_list=[];
 
-    for i=0:0.1:6*pi
-        vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, i);
-        leg_drawing=initialize_leg_drawing(leg_params);
+    leg_drawing=initialize_leg_drawing(leg_params);
+    for theta=0:0.1:6*pi
+        vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
+        
         update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
 
+        if theta<=2*pi
+        
+            theta_list(end+1)=theta;
+            dVdtheta_LA=compute_velocities(vertex_coords_root,leg_params,theta);
+            x7_LA(end+1)=dVdtheta_LA(13);
+            y7_LA(end+1)=dVdtheta_LA(14);
+            dVdtheta_FD=finite_differences(vertex_coords_root,leg_params,theta);
+            x7_FD(end+1)=dVdtheta_FD(13);
+            y7_FD(end+1)=dVdtheta_FD(14);
+
+            
+        end
+
+    
         drawnow;
         %capture a frame (what is currently plotted)
         current_frame = getframe(fig1);
@@ -92,9 +112,27 @@ function strandbeest()
     end
     close(writerObj);
 
+    figure(3)
+    hold off
+    subplot(2,1,1)
+    plot(theta_list,x7_LA, "g")
+    hold on
+    plot(theta_list,x7_FD, "r--")
+    legend("Linear Algebra", "Finite Differences")
+    xlabel("Theta")
+    ylabel("X Tip Velocity")
+    title("X Velocity vs Theta")
 
-    dVdtheta=compute_velocities(vertex_coords_root,leg_params,theta);
-    x7_LA=dVdtheta(13);
-    y7_LA=dVdtheta(14);
- 
+    subplot(2,1,2)
+    hold off
+    plot(theta_list,y7_LA,"g")
+    hold on
+    plot(theta_list,y7_FD, "r--")
+    legend("Linear Algebra", "Finite Differences")
+    xlabel("Theta")
+    ylabel("Y Tip Velocity")
+    title("Y Velocity vs Theta")
+    
+
+    
 end
