@@ -50,23 +50,10 @@ function strandbeest()
     [ -50; -50];... %vertex 6 guess
     [ -50; -100]... %vertex 7 guess
     ];
+    %theta=0;
+    %vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
 
-    theta=0;
-
-    vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
-
-    %leg_drawing=initialize_leg_drawing(leg_params);
-
-    %update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
-    
-    %animating from 0-6pi degrees
-    for i=0:0.1:6*pi
-        %vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, i);
-        %leg_drawing=initialize_leg_drawing(leg_params);
-        %update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
-    end
-
-    mypath1 = 'C:\Users\jvidaurrazaga\OneDrive - Olin College of Engineering\Documents\GitHub\Applied-Math-Assignment-2\';
+    mypath1 = 'C:\Users\jvidaurrazaga\Downloads\';
     fname='leg_animation.avi';
     input_fname = [mypath1,fname];
     writerObj = VideoWriter(input_fname);
@@ -82,26 +69,41 @@ function strandbeest()
     y7_LA=[];
     x7_FD=[];
     y7_FD=[];
+    x7_pos_list = [];
+    y7_pos_list = [];
     theta_list=[];
 
+    hold on
+    path_plot = plot(0,0,'k--');
+    tangent_plot = plot(0,0,'g');
+
     leg_drawing=initialize_leg_drawing(leg_params);
-    for theta=0:0.1:6*pi
+    for theta=0:0.03:6*pi
         vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
         
         update_leg_drawing(vertex_coords_root, leg_drawing, leg_params)
-
+        dVdtheta_LA=compute_velocities(vertex_coords_root,leg_params,theta);
+        dVdtheta_FD=finite_differences(vertex_coords_root,leg_params,theta);
         if theta<=2*pi
-        
+            x7_pos_list(end+1) = vertex_coords_root(13);
+            y7_pos_list(end+1) = vertex_coords_root(14);
             theta_list(end+1)=theta;
-            dVdtheta_LA=compute_velocities(vertex_coords_root,leg_params,theta);
+            
             x7_LA(end+1)=dVdtheta_LA(13);
             y7_LA(end+1)=dVdtheta_LA(14);
-            dVdtheta_FD=finite_differences(vertex_coords_root,leg_params,theta);
+            
             x7_FD(end+1)=dVdtheta_FD(13);
             y7_FD(end+1)=dVdtheta_FD(14);
-
             
+            set(path_plot,'xdata',x7_pos_list,'ydata',y7_pos_list)
+
         end
+
+        x_tangent = vertex_coords_root(13)+[0,dVdtheta_LA(13)];
+        y_tangent = vertex_coords_root(14)+[0,dVdtheta_LA(14)];
+        set(tangent_plot,'xdata',x_tangent,'ydata',y_tangent)
+
+        
 
     
         drawnow;
@@ -112,7 +114,7 @@ function strandbeest()
     end
     close(writerObj);
 
-    figure(3)
+    figure(2)
     hold off
     subplot(2,1,1)
     plot(theta_list,x7_LA, "g")
