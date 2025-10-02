@@ -22,16 +22,9 @@ function dVdtheta = compute_velocities(vertex_coords, leg_params, theta)
 
     M=approximate_jacobian(error_vec,vertex_coords);
 
-    
-    %disp(M);
-
     B=[zeros(num_linkages,1);-crank_length*sin(theta);crank_length*cos(theta);0;0];
 
-    %disp(B);
-
     dVdtheta=M\B;
-
-
 end
 
 

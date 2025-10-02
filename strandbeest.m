@@ -53,7 +53,9 @@ function strandbeest()
     %theta=0;
     %vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
 
-    mypath1 = 'C:\Users\jvidaurrazaga\Downloads\';
+    %mypath1 = 'C:\Users\jvidaurrazaga\Downloads\';
+    mypath1 = 'C:\Users\llin\Downloads\';
+    
     fname='leg_animation.avi';
     input_fname = [mypath1,fname];
     writerObj = VideoWriter(input_fname);
