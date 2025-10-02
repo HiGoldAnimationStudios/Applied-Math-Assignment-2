@@ -78,6 +78,12 @@ function strandbeest()
     tangent_plot = plot(0,0,'g');
 
     leg_drawing=initialize_leg_drawing(leg_params);
+
+    title("Strandbeest Leg Animation")
+    xlabel("X position")
+    ylabel("Y position")
+
+
     for theta=0:0.03:6*pi
         vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
         
