@@ -13,10 +13,9 @@ function part5()
     %should display 0 and prove that we found a root
     disp(froot);
 
-    %finding the time at which the two projectiles collide
+    %finding the time
     [root_c,~]=multi_newton_solver_generalized(@collision, [pi/4;11], solver_params);
     disp(root_c)
-    %plotting the paths of the projectiles
     run_simulation(root_c(1),root_c(2))
 
 end
