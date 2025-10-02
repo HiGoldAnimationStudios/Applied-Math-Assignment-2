@@ -1,5 +1,6 @@
+%This function calculates the difference between the two projectiles and
+%allows us to use our Multi Dimensional Newton Solver on it
 function V =collision(X)
-    X
     theta=X(1);
     time=X(2);
     V_p=projectile_traj(theta,time);

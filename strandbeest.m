@@ -53,6 +53,7 @@ function strandbeest()
     %theta=0;
     %vertex_coords_root = compute_coords(vertex_coords_guess, leg_params, theta);
 
+    % Initializing Video
     %mypath1 = 'C:\Users\jvidaurrazaga\Downloads\';
     mypath1 = 'C:\Users\llin\Downloads\';
     
